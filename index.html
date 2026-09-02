@@ -3,65 +3,620 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The personal website of Zhengyan Huan.">
-  <title>Zhengyan Huan | Personal Website</title>
+  <meta
+    name="description"
+    content="Zhengyan Huan is a PhD candidate at Tufts University researching generative models, constrained generation and inference, and reinforcement learning."
+  >
+  <title>Zhengyan Huan</title>
 
   <style>
     :root {
-      color-scheme: light dark;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
+      --ink: #172033;
+      --muted: #5e6879;
+      --accent: #2459d3;
+      --line: #dce2ec;
+      --paper: #ffffff;
+      --max-width: 1080px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.65;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      max-width: 800px;
+      margin: 0;
+      background: var(--paper);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    .page-shell {
+      width: min(calc(100% - 40px), var(--max-width));
       margin: 0 auto;
-      padding: 64px 24px;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .site-name {
+      color: var(--ink);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      padding: 34px 0;
     }
 
     h1,
-    h2 {
+    h2,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: 2rem;
       line-height: 1.2;
     }
 
-    h1,
-    a {
-      color: #2f81f7;
+    .affiliation {
+      margin-bottom: 12px;
+      color: var(--ink);
+      font-weight: 600;
     }
 
-    section {
-      margin-top: 40px;
+    .contact-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .contact-list a {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    main section {
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      display: block;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+      line-height: 1.25;
+    }
+
+    .section-copy {
+      max-width: 850px;
+      margin-bottom: 0;
+    }
+
+    .project-list {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+      gap: 28px;
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .project-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      cursor: zoom-in;
+      position: relative;
+      z-index: 1;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .project-image--compact {
+      width: min(100%, 220px);
+      justify-self: center;
+    }
+
+    .project-image--medium {
+      width: min(100%, 290px);
+      justify-self: center;
+    }
+
+    @media (hover: hover) and (min-width: 761px) {
+      .project-image:hover,
+      .project-image:focus {
+        z-index: 10;
+        transform: scale(2.5);
+        transform-origin: left center;
+        box-shadow: 0 10px 30px rgba(23, 32, 51, 0.2);
+        outline: none;
+      }
+
+      .project-image--zoom-3:hover,
+      .project-image--zoom-3:focus {
+        transform: scale(3);
+      }
+    }
+
+    .project-image-placeholder {
+      display: grid;
+      place-items: center;
+      aspect-ratio: 16 / 9;
+      border: 1px solid var(--line);
+      background: #f8f9fb;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .project-item h3 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+      line-height: 1.4;
+    }
+
+    .project-meta {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .project-description {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .publication-year + .publication-year {
+      margin-top: 20px;
+    }
+
+    .publication-year h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .publication-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .publication-list li + li {
+      margin-top: 14px;
+    }
+
+    .publication-title {
+      font-weight: 700;
+    }
+
+    .publication-authors,
+    .publication-venue {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    footer p {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 760px) {
+      .site-header {
+        display: grid;
+        gap: 14px;
+        padding: 22px 0;
+      }
+
+      nav {
+        gap: 18px;
+        overflow-x: auto;
+      }
+
+      .hero {
+        padding: 30px 0;
+      }
+
+      main section {
+        padding: 20px 0;
+      }
+
+      .project-item {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Zhengyan Huan</h1>
-    <p>Welcome to my personal website.</p>
-  </header>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="site-name" href="#top">Zhengyan Huan</a>
 
-  <main>
-    <section>
-      <h2>About Me</h2>
-      <p>
-        I am building this website to share my background, interests, and work.
-        More information will be added soon.
-      </p>
-    </section>
+      <nav aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#research-interests">Research Interests</a>
+        <a href="#projects">Selected Projects</a>
+        <a href="#publications">Publications</a>
+      </nav>
+    </header>
 
-    <section>
-      <h2>Projects</h2>
-      <p>I will feature selected projects here soon.</p>
-    </section>
+    <main id="top">
+      <div class="hero">
+        <div>
+          <h1>Zhengyan Huan</h1>
+          <p class="affiliation">
+            Department of Electrical and Computer Engineering, Tufts University
+          </p>
+        </div>
 
-    <section>
-      <h2>Contact</h2>
-      <p>
-        Visit my
-        <a href="https://github.com/ZhengyanHuan">GitHub profile</a>.
-      </p>
-    </section>
-  </main>
+        <div class="contact-list" aria-label="Contact links">
+          <a href="mailto:zhengyan.huan@tufts.edu">Email</a>
+          <a
+            href="documents/zhengyan-huan-cv.pdf"
+            target="_blank"
+            rel="noopener"
+          >CV</a>
+          <a href="https://github.com/ZhengyanHuan">GitHub</a>
+          <a href="https://scholar.google.com/citations?user=G3R5HxgAAAAJ&amp;hl=en">
+            Google Scholar
+          </a>
+        </div>
+      </div>
+
+      <section id="about">
+        <div class="section-heading">
+          <h2>About Me</h2>
+        </div>
+
+        <p class="section-copy">
+          I am a PhD candidate in the
+          <a href="https://engineering.tufts.edu/ece/">
+            Department of Electrical and Computer Engineering
+          </a>
+          at <a href="https://www.tufts.edu/">Tufts University</a>, advised by
+          Professor
+          <a href="https://engineering.tufts.edu/ece/people/faculty/shuchin-aeron">
+            Shuchin Aeron</a>. Before joining Tufts, I received an M.S. in
+          Electrical Engineering from the
+          <a href="https://www.upenn.edu/">University of Pennsylvania</a> and a
+          B.Eng. in Electronic Information Engineering from
+          <a href="https://www.hfut.edu.cn/">Hefei University of Technology</a>.
+        </p>
+      </section>
+
+      <section id="research-interests">
+        <div class="section-heading">
+          <h2>Research Interests</h2>
+        </div>
+
+        <p class="section-copy">
+          My research interests include generative models, reinforcement
+          learning, and inverse problems. I focus on developing reliable
+          generative and inference methods for problems involving physical,
+          structural, or task-specific constraints. Methodologically, I am
+          interested in flow matching, diffusion models, and learning-based
+          optimization, with a particular emphasis on
+          <strong>constrained generation and inference</strong>.
+        </p>
+      </section>
+
+      <section id="projects">
+        <div class="section-heading">
+          <h2>Selected Projects</h2>
+        </div>
+
+        <div class="project-list">
+          <article class="project-item">
+            <img
+              class="project-image project-image--zoom-3"
+              src="images/pdfm-overview.png"
+              alt="Comparison of generated dynamics and derivative statistics from standard flow matching and Primal-Dual Flow Matching against ground truth"
+              tabindex="0"
+            >
+
+            <div>
+              <h3>Primal-Dual Flow Matching for Sample-Wise Constrained Generation</h3>
+              <p class="project-meta">2026 · Under review</p>
+              <p class="project-description">
+                Scientific generative models must match data distributions
+                while satisfying sample-wise requirements, such as physical
+                laws or molecular validity, at a desired rate. We develop
+                <strong>Primal-Dual Flow Matching (PDFM)</strong>, a training-time
+                method that directly controls constraint-satisfaction
+                probability while preserving distributional fidelity. PDFM
+                provides <strong>theoretical guarantees on constraint
+                satisfaction and the optimality gap</strong> and requires only a
+                membership oracle (a yes-or-no feasibility test), without
+                convexity, differentiable distances, or projections.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-item">
+            <img
+              class="project-image"
+              src="images/eip-overview.png"
+              alt="Observation ensembles mapped back to their corresponding ensemble of hidden ground-truth signals"
+              tabindex="0"
+            >
+
+            <div>
+              <h3>Inverse Problems Conditioned on Observation Ensembles: Applications and Methods</h3>
+              <p class="project-meta">2026 · Under review</p>
+              <p class="project-description">
+                Inverse problems recover hidden signals from indirect
+                observations, but standard methods often assume a known/fixed
+                prior or repeatedly invoke an expensive forward model. We
+                introduce the
+                <strong>Ensemble-conditioned Inverse Problem (EIP)</strong>, where
+                an observation ensemble provides information about its unknown
+                prior. Our ensemble inverse generative models condition
+                posterior sampling on both an individual observation and a
+                learned ensemble summary, enabling non-iterative inference
+                without the forward model at test time and generalization to
+                unseen priors.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-item">
+            <img
+              class="project-image"
+              src="images/fm-re-overview.png"
+              alt="Comparison of feasible training data, standard flow matching with many infeasible samples, and the proposed objective with fewer infeasible samples"
+              tabindex="0"
+            >
+
+            <div>
+              <h3>Constraint-Aware Flow Matching via Randomized Exploration</h3>
+              <p class="project-meta">
+                2026 ·
+                <a href="https://arxiv.org/abs/2508.13316">Paper</a> ·
+                <a
+                  href="documents/fm-re-poster.pdf"
+                  target="_blank"
+                  rel="noopener"
+                >Poster</a>
+              </p>
+              <p class="project-description">
+                Generative models can match a target data distribution yet
+                still produce samples that violate important rules, such as
+                physical feasibility or required image attributes. We develop
+                <strong>Flow Matching via Randomized Exploration (FM-RE)</strong>,
+                a training-time method that improves constraint satisfaction
+                without changing sampling. When constraints are available only
+                through a membership oracle (a yes-or-no feasibility test),
+                FM-RE uses randomized exploration to learn a constraint-aware
+                mean flow. It requires neither convex constraints,
+                differentiable distance functions, nor projection operators.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-item">
+            <img
+              class="project-image project-image--medium"
+              src="images/qcd-reward-function.png"
+              alt="Illustration of the quickest change detection reward function before and after the change point"
+              tabindex="0"
+            >
+
+            <div>
+              <h3>Policy Gradient and Actor-Critic Approaches to Quickest Change Detection</h3>
+              <p class="project-meta">
+                2026 ·
+                <a href="https://ieeexplore.ieee.org/document/11561041">Paper</a>
+              </p>
+              <p class="project-description">
+                Quickest change detection seeks to detect a change point in a
+                sequential data stream with minimal delay while controlling
+                false alarms, with applications to cyberattack, solar-flare,
+                and credit-card-fraud detection. Classical methods often require
+                unavailable pre- and post-change distributions. We develop one
+                policy-gradient and two actor-critic methods that learn a
+                sequential alarm policy from labeled time-series data. By
+                defining the stopping time as the first alarm time and enforcing
+                a “keep alarming after the first alarm” structure, our approach
+                aligns learning with the QCD objective by focusing on the first
+                alarm rather than independently classifying each time step.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-item">
+            <img
+              class="project-image project-image--compact"
+              src="images/resilient-crl-overview.png"
+              alt="Non-resilient and resilient robot-monitoring policies with reward and utility curves; dashed lines are non-resilient and solid lines are resilient"
+              tabindex="0"
+            >
+
+            <div>
+              <h3>Resilient Constrained Reinforcement Learning</h3>
+              <p class="project-meta">
+                2024 ·
+                <a href="https://proceedings.mlr.press/v238/ding24a/ding24a.pdf">Paper</a>
+              </p>
+              <p class="project-description">
+                Constrained reinforcement learning seeks policies that maximize
+                reward while satisfying requirements such as safety or resource
+                limits. In practice, these constraint specifications (e.g.,
+                required thresholds) are often difficult to set and may even
+                make the problem infeasible. We develop resilient constrained
+                reinforcement learning, which jointly learns a policy and
+                adjusts nominal constraint specifications by balancing reward
+                improvement against the cost of relaxing constraints. This
+                approach supports applications with uncertain requirements,
+                including resource allocation and robot monitoring.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="publications">
+        <div class="section-heading">
+          <h2>Publications</h2>
+        </div>
+
+        <div class="publication-year">
+          <h3>2026</h3>
+          <ul class="publication-list">
+            <li>
+              <a
+                class="publication-title"
+                href="https://ieeexplore.ieee.org/document/11561041"
+              >Policy Gradient and Actor-Critic Approaches to Quickest Change Detection</a>
+              <span class="publication-authors">
+                <strong>Zhengyan Huan</strong>, Xiaodong Wang, and Xiao-Yang Liu
+              </span>
+              <span class="publication-venue">IEEE Transactions on Signal Processing</span>
+            </li>
+            <li>
+              <a
+                class="publication-title"
+                href="https://openreview.net/forum?id=OR4h9WPJhV"
+              >Constraint-Aware Flow Matching via Randomized Exploration</a>
+              <span class="publication-authors">
+                <strong>Zhengyan Huan</strong>, Jacob Boerma, Li-Ping Liu, and Shuchin Aeron
+              </span>
+              <span class="publication-venue">Transactions on Machine Learning Research</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="publication-year">
+          <h3>2025</h3>
+          <ul class="publication-list">
+            <li>
+              <a
+                class="publication-title"
+                href="https://scipost.org/SciPostPhysCore.8.4.064"
+              >Towards Universal Unfolding of Detector Effects in High-Energy Physics Using Denoising Diffusion Probabilistic Models</a>
+              <span class="publication-authors">
+                Camila Pazos, Shuchin Aeron, Pierre-Hugues Beauchemin, Vincent Croft,
+                <strong>Zhengyan Huan</strong>, Martin Klassen, and Taritree Wongjirad
+              </span>
+              <span class="publication-venue">SciPost Physics Core 8 (4), 064</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="publication-year">
+          <h3>2024</h3>
+          <ul class="publication-list">
+            <li>
+              <a
+                class="publication-title"
+                href="https://proceedings.mlr.press/v238/ding24a.html"
+              >Resilient Constrained Reinforcement Learning</a>
+              <span class="publication-authors">
+                Dongsheng Ding, <strong>Zhengyan Huan</strong>, and Alejandro Ribeiro
+              </span>
+              <span class="publication-venue">
+                International Conference on Artificial Intelligence and Statistics, 3412–3420
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="publication-year">
+          <h3>2022</h3>
+          <ul class="publication-list">
+            <li>
+              <a
+                class="publication-title"
+                href="https://opg.optica.org/abstract.cfm?uri=ol-47-19-4901"
+              >Model-Based End-to-End Learning for a Self-Homodyne Coherent System</a>
+              <span class="publication-authors">
+                <strong>Zhengyan Huan</strong>, Yetian Huang, Yi Lei, Hanzi Huang,
+                Haoshuo Chen, and Bin Chen
+              </span>
+              <span class="publication-venue">Optics Letters 47 (19), 4901–4904</span>
+            </li>
+            <li>
+              <a
+                class="publication-title"
+                href="https://opg.optica.org/abstract.cfm?uri=OFC-2022-Th3F.4"
+              >Shaped Four-Dimensional Modulation Formats for Optical Fiber Communication Systems</a>
+              <span class="publication-authors">
+                Bin Chen, Gabriele Liga, Yi Lei, Wei Ling, <strong>Zhengyan Huan</strong>,
+                Xuwei Xue, and Alex Alvarado
+              </span>
+              <span class="publication-venue">Optical Fiber Communication Conference, Th3F.4</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Zhengyan Huan</p>
+      <p>PhD Candidate · Tufts University</p>
+    </footer>
+  </div>
 </body>
 </html>
